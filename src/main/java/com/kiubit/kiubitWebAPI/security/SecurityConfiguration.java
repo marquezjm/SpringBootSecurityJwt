@@ -82,7 +82,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChainLoginAPI(HttpSecurity httpSecurity) throws Exception {
         sharedSecurityConfiguration(httpSecurity);
         httpSecurity
-                .securityMatcher("/user/authenticate")
+                .securityMatcher("/user/authenticate","/user/get-user")
                 .authorizeHttpRequests(auth -> {
                     auth.anyRequest().permitAll();
                 })

@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class KiubitWebApiApplication {
 
 	public static void main(String[] args) {
+            System.out.println(new BCryptPasswordEncoder().encode("1234"));
+            
+            
 		SpringApplication.run(KiubitWebApiApplication.class, args);
 	}
         

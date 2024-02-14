@@ -11,6 +11,7 @@ import com.kiubit.kiubitWebAPI.pojos.Usuario;
 import com.kiubit.kiubitWebAPI.security.JWTTokenUtil;
 import com.kiubit.kiubitWebAPI.security.SecurityPrincipal;
 import com.kiubit.kiubitWebAPI.service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "Bearer Authentication")
 public class UserController {
 
     @Autowired
@@ -78,6 +80,8 @@ public class UserController {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
+        }catch (Exception e){
+            throw new Exception("Error", e);
         }
     }
 
@@ -115,6 +119,13 @@ public class UserController {
 
         return EntityResponse.generateResponse("Create", HttpStatus.CREATED, response);
 
+    }
+    
+    @PostMapping("/get-user")
+    @ResponseBody
+    public ResponseEntity<Object> getUser(@RequestBody Usuario usuario) {
+        Usuario user = userService.findByUsername(usuario.getCorreo());
+        return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, user);
     }
 
     /*@PostMapping("/user-role")
