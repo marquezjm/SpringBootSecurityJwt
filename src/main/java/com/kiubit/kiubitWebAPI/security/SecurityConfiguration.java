@@ -49,7 +49,7 @@ public class SecurityConfiguration {
             configurers.add(new GlobalAuthenticationConfigurerAdapter() {
                     @Override
                     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-                            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+                            auth.userDetailsService(userDetailsService);//.passwordEncoder(passwordEncoder);
                     }
             });
             return authConfig.getAuthenticationManager();

@@ -4,6 +4,8 @@
  */
 package com.kiubit.kiubitWebAPI.security;
 
+import com.kiubit.kiubitWebAPI.pojos.Usuario;
+import com.kiubit.kiubitWebAPI.service.UsuarioService;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,11 +23,11 @@ public class SecurityPrincipal {
 
     private Authentication principal = SecurityContextHolder.getContext().getAuthentication();
 
-    private static WUserService userService;
+    private static UsuarioService userService;
 
 
     @Autowired	
-    private SecurityPrincipal(WUserService userService) {
+    private SecurityPrincipal(UsuarioService userService) {
             this.userService = userService;
     }
 
@@ -35,7 +37,7 @@ public class SecurityPrincipal {
             return securityPrincipal;
     }
 
-    public User getLoggedInPrincipal() {
+    public Usuario getLoggedInPrincipal() {
             if(principal != null) {
                     UserDetails loggedInPrincipal = (UserDetails) principal.getPrincipal();
                     return userService.findByUsername(loggedInPrincipal.getUsername());

@@ -8,8 +8,12 @@ package com.kiubit.kiubitWebAPI.pojos;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 /**
@@ -31,6 +35,9 @@ public class Usuario implements Serializable, UserDetails {
     private String apellido_materno;
     private String correo;
     private String status;
+    @ManyToOne
+    @JoinColumn(name="rol")
+    private Role role;
 
     public String getUsuario_id() {
         return usuario_id;
@@ -95,6 +102,15 @@ public class Usuario implements Serializable, UserDetails {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRoles(Role roles) {
+        this.role = role;
+    }
+   
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
