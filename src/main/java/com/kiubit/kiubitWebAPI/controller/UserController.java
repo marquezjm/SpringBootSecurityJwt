@@ -4,6 +4,7 @@
  */
 package com.kiubit.kiubitWebAPI.controller;
 
+import com.kiubit.kiubitWebAPI.dto.UsuarioDTO;
 import com.kiubit.kiubitWebAPI.pojos.AuthenticationRequest;
 import com.kiubit.kiubitWebAPI.pojos.AuthenticationResponse;
 import com.kiubit.kiubitWebAPI.pojos.EntityResponse;
@@ -12,6 +13,7 @@ import com.kiubit.kiubitWebAPI.security.JWTTokenUtil;
 import com.kiubit.kiubitWebAPI.security.SecurityPrincipal;
 import com.kiubit.kiubitWebAPI.service.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
@@ -108,7 +113,8 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<Object> getUser() {
         Usuario user = userService.findByUsername(SecurityPrincipal.getInstance().getLoggedInPrincipal().getCorreo());
-        return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, user);
+        UsuarioDTO respuesta = modelMapper.map(user,UsuarioDTO.class);
+        return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, respuesta);
     }
 
     @PostMapping("/register")
@@ -123,9 +129,10 @@ public class UserController {
     
     @PostMapping("/get-user")
     @ResponseBody
-    public ResponseEntity<Object> getUser(@RequestBody Usuario usuario) {
+    public ResponseEntity<Object> getUser(@RequestBody UsuarioDTO usuario) {
         Usuario user = userService.findByUsername(usuario.getCorreo());
-        return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, user);
+        UsuarioDTO respuesta = modelMapper.map(user,UsuarioDTO.class);
+        return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, respuesta);
     }
 
     /*@PostMapping("/user-role")
