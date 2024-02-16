@@ -5,14 +5,14 @@
 package com.kiubit.kiubitWebAPI.pojos;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -35,5 +35,16 @@ public class Curso implements Serializable {
     private int duracion_s;
     private boolean gratuito;
     private String status;
+    @ManyToMany
+    @JoinTable(name = "tbl_kiubit_curso_modulo",
+                joinColumns = @JoinColumn(name = "curso_id"),
+                inverseJoinColumns = @JoinColumn(name = "modulo_id"))
+    private List<Modulo> modulos=new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tbl_kiubit_curso_actividad",
+            joinColumns = @JoinColumn(name = "curso_id"),
+            inverseJoinColumns = @JoinColumn(name = "actividad_id"))
+    private List<Actividad> actividades = new ArrayList<>();
 
 }

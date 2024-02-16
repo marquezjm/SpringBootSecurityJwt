@@ -20,11 +20,11 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "tbl_kiubit_curso_multimedia")
+@Table(name = "tbl_kiubit_curso_actividad")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CursoMultimedia implements Serializable {
+public class CursoActividad implements Serializable {
 
     @Id
     private String curso_id;

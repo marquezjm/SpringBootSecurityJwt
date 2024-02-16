@@ -135,6 +135,8 @@ public class UserController {
         return EntityResponse.generateResponse("Retrieve User Success", HttpStatus.OK, respuesta);
     }
 
+
+
     /*@PostMapping("/user-role")
     @ResponseBody
     public void createUserRoel(@RequestBody Role param) {
