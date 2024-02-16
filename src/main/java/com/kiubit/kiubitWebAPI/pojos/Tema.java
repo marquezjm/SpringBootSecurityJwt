@@ -7,12 +7,18 @@ package com.kiubit.kiubitWebAPI.pojos;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,7 +38,15 @@ public class Tema implements Serializable {
     private String descripcion;
     private int duracion_m;
     private int duracion_s;
-    private String tipo_multimedia;
+    @ManyToOne
+    @JoinColumn(name="tipo_multimedia")
+    private TipoMultimedia tipo_multimedia;
     private String status;
+    
+    @ManyToMany
+    @JoinTable(name = "tbl_kiubit_tema_actividad",
+            joinColumns = @JoinColumn(name = "tema_id"),
+            inverseJoinColumns = @JoinColumn(name = "actividad_id"))
+    private List<Actividad> actividades = new ArrayList<>();
 
 }
